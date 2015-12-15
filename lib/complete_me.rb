@@ -1,4 +1,4 @@
 require 'pry'
 
-class Trie
+class CompleteMe
 end
