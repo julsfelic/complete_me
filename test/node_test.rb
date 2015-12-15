@@ -19,6 +19,12 @@ class NodeTest < Minitest::Test
     assert_equal "a", node.value
   end
 
+  def test_word_can_be_instantiated_with_a_value
+    node = Node.new("a", true)
+
+    assert node.word?
+  end
+
   def test_has_an_initial_children_attr_set_to_an_empty_hash
     assert_instance_of Hash, @node.children
   end

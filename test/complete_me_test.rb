@@ -42,6 +42,6 @@ class CompleteMeTest < Minitest::Test
     @completion.insert('a')
     inserted_node = @completion.root.children['a']
 
-    assert inserted_node.word
+    assert inserted_node.word?
   end
 end
