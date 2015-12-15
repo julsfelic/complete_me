@@ -13,7 +13,11 @@ class NodeTest < Minitest::Test
     assert_equal "", @node.value
   end
 
-  def test_has_a_children_attr_set_to_an_empty_hash
+  def test_has_an_initial_children_attr_set_to_an_empty_hash
     assert_instance_of Hash, @node.children
+  end
+
+  def test_has_an_initial_word_attr_set_to_false
+    refute @node.word?
   end
 end
