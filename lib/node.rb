@@ -4,8 +4,8 @@ class Node
   attr_reader :value, :children, :word
   alias_method :word?, :word
 
-  def initialize
-    @value = ""
+  def initialize(value="")
+    @value = value
     @children = {}
     @word = false
   end

@@ -15,9 +15,13 @@ class CompleteMe
 
   def check_for_and_insert_word(word)
     if @root.children[word].nil?
-      @root.children[word] = Node.new
+      @root.children[word] = new_node_with_value(word)
     else
       # do some recursion to go to the next node and do shit
     end
+  end
+
+  def new_node_with_value(word)
+    Node.new(word)
   end
 end
