@@ -50,7 +50,6 @@ class CompleteMeTest < Minitest::Test
     first_inserted_node  = @completion.root.children['a']
     second_inserted_node = first_inserted_node.children['t']
 
-    assert_equal 'a', first_inserted_node.value
     assert_equal 'at', second_inserted_node.value
   end
 end

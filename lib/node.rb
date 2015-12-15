@@ -1,8 +1,8 @@
 require 'pry'
 
 class Node
-  attr_accessor :word
-  attr_reader :value, :children
+  attr_accessor :word, :value
+  attr_reader :children
   alias_method :word?, :word
 
   def initialize(value="", word=false)

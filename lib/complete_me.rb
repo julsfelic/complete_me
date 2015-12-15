@@ -13,23 +13,33 @@ class CompleteMe
     check_for_and_insert_word(word)
   end
 
-  def check_for_and_insert_word(word, node=root)
+  def check_for_and_insert_word(word, node=root, value="")
     until word.length == 0
       character = word.slice!(0...1)
-      value = node.value + character
-      next_node = new_node_with_value(value)
+      # save only the value if it is a word
+      value += character
+      next_node = Node.new
+      if word.length == 0
+        next_node.value = value
+        next_node.word = true
+        node.children[character] = next_node
+        break
+      end
       if node.children[character].nil?
         node.children[character] = next_node
-        check_for_and_insert_word(word, next_node)
+        check_for_and_insert_word(word, next_node, value)
       else
         next_node = node.children[character]
-        check_for_and_insert_word(word, next_node)
+        check_for_and_insert_word(word, next_node, value)
       end
-      next_node.word = true if word.length == 0
     end
   end
 
-  def new_node_with_value(word)
-    Node.new(word)
-  end
+  # def new_node_with_value(word)
+  #   Node.new(word)
+  # end
 end
+
+complete = CompleteMe.new
+complete.insert("catty")
+complete.insert("cat")
