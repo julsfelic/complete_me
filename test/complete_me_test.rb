@@ -39,7 +39,7 @@ class CompleteMeTest < Minitest::Test
     assert_equal 'a', inserted_node_value
   end
 
-  def test_sets_word_attr_to_true_for_newly_inserted_node_when_given_a_single_character
+  def test_sets_word_attr_to_true_for_newly_inserted_word_that_has_one_char
     @completion.insert('a')
     inserted_node = @completion.root.children['a']
 
