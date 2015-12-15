@@ -1,4 +1,6 @@
 require 'minitest'
+require 'test_helper'
+require 'node'
 
 class NodeTest < Minitest::Test
   def setup

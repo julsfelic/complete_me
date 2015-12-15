@@ -1,4 +1,5 @@
 require 'minitest'
+require 'test_helper'
 require 'complete_me'
 require 'node'
 
