@@ -18,4 +18,10 @@ class CompleteMeTest < Minitest::Test
   def test_root_node_has_a_value_of_a_empty_string
     assert_equal "", @completion.root.value
   end
+
+  def test_insert_raises_error_if_not_given_a_string
+    assert_raises ArgumentError do
+      @completion.insert(8)
+    end
+  end
 end

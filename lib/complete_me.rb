@@ -7,4 +7,8 @@ class CompleteMe
   def initialize
     @root = Node.new
   end
+
+  def insert(word)
+    raise ArgumentError, 'Argument is not a word' unless word.is_a?(String)
+  end
 end
