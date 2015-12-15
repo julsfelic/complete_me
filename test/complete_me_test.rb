@@ -31,10 +31,17 @@ class CompleteMeTest < Minitest::Test
     assert_instance_of Node, @completion.root.children['a']
   end
 
-  def test_insert_properly_sets_value_for_inserted_node
+  def test_insert_properly_sets_value_for_inserted_node_when_given_a_single_character
     @completion.insert('a')
     inserted_node_value = @completion.root.children['a'].value
-    
+
     assert_equal 'a', inserted_node_value
+  end
+
+  def test_sets_word_attr_to_true_for_newly_inserted_node_when_given_a_single_character
+    @completion.insert('a')
+    inserted_node = @completion.root.children['a']
+
+    assert inserted_node.word
   end
 end

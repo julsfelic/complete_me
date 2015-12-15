@@ -17,11 +17,15 @@ class CompleteMe
     if @root.children[word].nil?
       @root.children[word] = new_node_with_value(word)
     else
+      # grab node in children
+      # shift off first character in word
       # do some recursion to go to the next node and do shit
     end
   end
 
   def new_node_with_value(word)
-    Node.new(word)
+    if word.length < 2
+      Node.new(word, true)
+    end
   end
 end
