@@ -44,4 +44,13 @@ class CompleteMeTest < Minitest::Test
 
     assert inserted_node.word?
   end
+
+  def test_insert_properly_inserts_a_word_of_length_2
+    @completion.insert('at')
+    first_inserted_node  = @completion.root.children['a']
+    second_inserted_node = first_inserted_node.children['t']
+
+    assert_equal 'a', first_inserted_node.value
+    assert_equal 'at', second_inserted_node.value
+  end
 end

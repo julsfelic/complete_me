@@ -13,19 +13,23 @@ class CompleteMe
     check_for_and_insert_word(word)
   end
 
-  def check_for_and_insert_word(word)
-    if @root.children[word].nil?
-      @root.children[word] = new_node_with_value(word)
-    else
-      # grab node in children
-      # shift off first character in word
-      # do some recursion to go to the next node and do shit
+  def check_for_and_insert_word(word, node=root)
+    until word.length == 0
+      character = word.slice!(0...1)
+      value = node.value + character
+      next_node = new_node_with_value(value)
+      if node.children[character].nil?
+        node.children[character] = next_node
+        check_for_and_insert_word(word, next_node)
+      else
+        next_node = node.children[character]
+        check_for_and_insert_word(word, next_node)
+      end
+      next_node.word = true if word.length == 0
     end
   end
 
   def new_node_with_value(word)
-    if word.length < 2
-      Node.new(word, true)
-    end
+    Node.new(word)
   end
 end
