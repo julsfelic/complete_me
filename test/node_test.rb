@@ -38,4 +38,10 @@ class NodeTest < Minitest::Test
   def test_has_a_weight_set_to_zero_on_assignment
     assert_equal 0, @node.weight
   end
+
+  def test_can_increase_its_weight_by_an_interval_of_one
+    @node.increase_weight
+
+    assert_equal 1, @node.weight
+  end
 end

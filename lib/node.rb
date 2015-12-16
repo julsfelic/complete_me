@@ -9,4 +9,8 @@ class Node
     @word = word
     @weight = 0
   end
+
+  def increase_weight
+    @weight += 1
+  end
 end
