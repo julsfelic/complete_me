@@ -101,13 +101,16 @@ class CompleteMe
   end
 end
 
-complete = CompleteMe.new
-complete.insert("doggerel")
-complete.insert("doggereler")
-complete.insert("doggerelism")
-complete.insert("doggerelist")
-complete.insert("doggerelize")
-complete.insert("doggerelizer")
-
-complete.count
-complete.suggest("doggerel")
+# complete = CompleteMe.new
+# complete.insert("doggerel")
+# complete.insert("doggereler")
+# complete.insert("doggerelism")
+# complete.insert("doggerelist")
+# complete.insert("doggerelize")
+# complete.insert("doggerelizer")
+# dictionary = File.read("/usr/share/dict/words")
+# complete.populate(dictionary)
+#
+# complete.count
+# binding.pry
+# complete.suggest("doggerel")
