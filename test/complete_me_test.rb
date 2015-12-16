@@ -74,4 +74,11 @@ class CompleteMeTest < Minitest::Test
   def test_suggest_returns_an_empty_array_if_there_are_no_words_in_trie
     assert_equal [], @completion.suggest("piz")
   end
+
+  def test_suggest_returns_an_array_with_one_element_that_could_match_pizza
+    @completion.insert('pizza')
+    suggestion = @completion.suggest("piz")
+
+    assert_equal ['pizza'], suggestion
+  end
 end

@@ -58,7 +58,32 @@ class CompleteMe
   end
 
   def suggest(fragment)
-    return [] if root.children.empty?  
+    return [] if root.children.empty?
+    go_to_next_node(fragment)
+  end
+
+  def go_to_next_node(fragment, node=root)
+    if fragment.length == 0
+      return find_all_matching_words(node)
+    end
+    character = fragment.slice!(0...1)
+    unless node.children[character].nil?
+      go_to_next_node(fragment, node.children[character])
+    end
+  end
+
+  def find_all_matching_words(node, matching_words=[])
+    node.children.each do |key, node|
+      return if node.word == false && node.children.empty?
+      if node.word
+        matching_words << node.value
+        break
+      end
+      if node.word == false
+        matching_words = find_all_matching_words(node, matching_words)
+      end
+    end
+    matching_words
   end
 end
 
