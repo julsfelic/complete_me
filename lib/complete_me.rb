@@ -43,8 +43,18 @@ class CompleteMe
     find_amount_of_words
   end
 
-  def find_amount_of_words(node=root)
-    return 0 if node.children.empty?
+  def find_amount_of_words(node=root, count=0)
+    node.children.each do |key, node|
+      return if node.word == false && node.children.empty?
+      if node.word
+        count += 1
+        break
+      end
+      if node.word == false
+        count = find_amount_of_words(node, count)
+      end
+    end
+    count
   end
 end
 
