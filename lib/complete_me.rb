@@ -19,8 +19,13 @@ class CompleteMe
       value += character
       next_node = Node.new
       if word.length == 0
-        next_node = create_word(value)
-        connect_node(node, next_node, character)
+        if node.children[character].nil?
+          next_node = create_word(value)
+          connect_node(node, next_node, character)
+        else
+          node.children[character].value = value
+          node.children[character].word  = true
+        end
       elsif node.children[character].nil?
         connect_node(node, next_node, character)
         check_for_and_insert_word(word, next_node, value)
@@ -44,7 +49,6 @@ class CompleteMe
   end
 
   def find_amount_of_words(node=root, count=0)
-    # binding.pry
     return count if node.children.empty?
     node.children.each do |key, node|
       if node.word
@@ -76,6 +80,7 @@ class CompleteMe
 
   def find_all_matching_words(node, matching_words=[])
     return matching_words if node.children.empty?
+    matching_words << node.value if node.word? && !matching_words.include?(node.value)
     node.children.each do |key, node|
       if node.word
         matching_words << node.value
@@ -96,4 +101,13 @@ class CompleteMe
   end
 end
 
-# >> ["pizza", "pizzeria"]
+complete = CompleteMe.new
+complete.insert("doggerel")
+complete.insert("doggereler")
+complete.insert("doggerelism")
+complete.insert("doggerelist")
+complete.insert("doggerelize")
+complete.insert("doggerelizer")
+
+complete.count
+complete.suggest("doggerel")
