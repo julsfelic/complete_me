@@ -96,8 +96,17 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal ['pizza', 'pizzeria'], suggestion
   end
+
+  def test_suggest_returns_an_sorted_array_of_suggested_words
+    @completion.insert('a')
+    @completion.insert('apple')
+    @completion.insert("aardvark")
+    suggestion = @completion.suggest("a")
+
+    assert_equal ['a', 'aardvark', 'apple'], suggestion
+  end
   # create a personal dictionary file with 100 words that we could run on travis
-  
+
   # def test_populate_properly_parses_file_and_inserts_words_into_trie
   #   dictionary = File.read("/usr/share/dict/words")
   #   @completion.populate(dictionary)

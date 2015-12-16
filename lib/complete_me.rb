@@ -67,8 +67,8 @@ class CompleteMe
 
   def go_to_next_node(fragment, node=root)
     if fragment.length == 0
-      value = find_all_matching_words(node)
-      return value
+      words = find_all_matching_words(node)
+      return words.sort
     end
     character = fragment.slice!(0...1)
     unless node.children[character].nil?
