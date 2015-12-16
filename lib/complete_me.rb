@@ -44,11 +44,12 @@ class CompleteMe
   end
 
   def find_amount_of_words(node=root, count=0)
+    # binding.pry
+    return count if node.children.empty?
     node.children.each do |key, node|
-      return if node.word == false && node.children.empty?
       if node.word
         count += 1
-        break
+        count = find_amount_of_words(node, count)
       end
       if node.word == false
         count = find_amount_of_words(node, count)
@@ -64,7 +65,8 @@ class CompleteMe
 
   def go_to_next_node(fragment, node=root)
     if fragment.length == 0
-      return find_all_matching_words(node)
+      value = find_all_matching_words(node)
+      return value
     end
     character = fragment.slice!(0...1)
     unless node.children[character].nil?
@@ -73,11 +75,11 @@ class CompleteMe
   end
 
   def find_all_matching_words(node, matching_words=[])
+    return matching_words if node.children.empty?
     node.children.each do |key, node|
-      return if node.word == false && node.children.empty?
       if node.word
         matching_words << node.value
-        break
+        matching_words = find_all_matching_words(node, matching_words)
       end
       if node.word == false
         matching_words = find_all_matching_words(node, matching_words)
@@ -87,6 +89,18 @@ class CompleteMe
   end
 end
 
-complete = CompleteMe.new
-complete.insert("catty")
-complete.insert("cat")
+if __FILE__ == $0
+  complete = CompleteMe.new
+
+  complete.insert("dog")
+  complete.insert("dont")
+  complete.insert("pizza")
+  complete.insert("pizzeria")
+  complete.insert("cat")
+  complete.insert("catty")
+
+  complete.count
+  p complete.suggest('piz')
+end
+
+# >> ["pizza", "pizzeria"]

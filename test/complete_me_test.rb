@@ -70,6 +70,13 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal 2, @completion.count
   end
+  meta t: true
+  def test_the_words_cat_and_catty_count_as_two_words
+    @completion.insert('cat')
+    @completion.insert('catty')
+
+    assert_equal 2, @completion.count
+  end
 
   def test_suggest_returns_an_empty_array_if_there_are_no_words_in_trie
     assert_equal [], @completion.suggest("piz")
@@ -80,5 +87,13 @@ class CompleteMeTest < Minitest::Test
     suggestion = @completion.suggest("piz")
 
     assert_equal ['pizza'], suggestion
+  end
+
+  def test_suggest_returns_an_array_with_two_elements_that_could_match_pizza
+    @completion.insert('pizza')
+    @completion.insert('pizzeria')
+    suggestion = @completion.suggest("piz")
+
+    assert_equal ['pizza', 'pizzeria'], suggestion
   end
 end
