@@ -105,9 +105,8 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal ['a', 'aardvark', 'apple'], suggestion
   end
-
+  
   def test_can_suggest_how_to_order_words
-    skip
     @completion.insert('pizza')
     @completion.insert('pizzeria')
     @completion.insert('pizzicato')

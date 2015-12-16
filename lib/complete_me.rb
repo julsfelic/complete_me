@@ -61,23 +61,55 @@ class CompleteMe
   end
 
   def select(fragment, word)
+    unweighted_nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
+    unweighted_nodes.each do |node|
+      node.increase_weight if node.value ==  word
+    end
+  end
 
+  def sort_words(nodes)
+    weighted_nodes = nodes.select do |node|
+      node.weight > 0
+    end
+    weighted_words = weighted_nodes.map do |node|
+      node.value
+    end
+    sorted_words = nodes.map do |node|
+      node.value
+    end.sort
+    words = weighted_words | sorted_words
   end
 
   def suggest(fragment)
     return [] if root.children.empty?
-    go_to_next_node(fragment) { |node| find_all_matching_words(node) }
+    nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
+    sort_words(nodes)
   end
 
   def go_to_next_node(fragment, node=root, &block)
     if fragment.length == 0
       words = yield(node)
-      return words.sort
+      return words
     end
     character = fragment.slice!(0...1)
     unless node.children[character].nil?
       go_to_next_node(fragment, node.children[character], &block)
     end
+  end
+
+  def return_matching_nodes(node, matching_nodes=[])
+    return matching_nodes if node.children.empty?
+    matching_nodes << node if node.word? && !matching_nodes.include?(node.value)
+    node.children.each do |key, node|
+      if node.word
+        matching_nodes << node
+        matching_nodes = return_matching_nodes(node, matching_nodes)
+      end
+      # if node.word == false
+        matching_nodes = return_matching_nodes(node, matching_nodes)
+      # end
+    end
+    matching_nodes
   end
 
   def find_all_matching_words(node, matching_words=[])
@@ -102,17 +134,3 @@ class CompleteMe
     end
   end
 end
-
-# complete = CompleteMe.new
-# complete.insert("doggerel")
-# complete.insert("doggereler")
-# complete.insert("doggerelism")
-# complete.insert("doggerelist")
-# complete.insert("doggerelize")
-# complete.insert("doggerelizer")
-# dictionary = File.read("/usr/share/dict/words")
-# complete.populate(dictionary)
-#
-# complete.count
-# binding.pry
-# complete.suggest("doggerel")
