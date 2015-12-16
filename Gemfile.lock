@@ -14,6 +14,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     rouge (1.10.1)
     rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
@@ -33,6 +35,7 @@ PLATFORMS
 DEPENDENCIES
   mrspec
   pry
+  pry-nav
   simplecov
 
 BUNDLED WITH

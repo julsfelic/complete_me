@@ -53,4 +53,8 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal 'at', second_inserted_node.value
   end
+
+  def test_count_returns_zero_if_no_words_are_in_the_trie
+    assert_equal 0, @completion.count
+  end
 end

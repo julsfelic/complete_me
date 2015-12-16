@@ -1,5 +1,5 @@
-require 'pry'
 require_relative 'node'
+require 'pry'
 
 class CompleteMe
   attr_reader :root
@@ -37,6 +37,14 @@ class CompleteMe
 
   def connect_node(node, next_node, character)
     node.children[character] = next_node
+  end
+
+  def count
+    find_amount_of_words
+  end
+
+  def find_amount_of_words(node=root)
+    return 0 if node.children.empty?
   end
 end
 
