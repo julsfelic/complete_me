@@ -57,10 +57,17 @@ class CompleteMeTest < Minitest::Test
   def test_count_returns_zero_if_no_words_are_in_the_trie
     assert_equal 0, @completion.count
   end
-  
+
   def test_count_returns_one_if_one_word_is_in_the_trie
     @completion.insert('cat')
 
     assert_equal 1, @completion.count
+  end
+
+  def test_count_returns_two_if_two_words_are_in_the_trie
+    @completion.insert('cat')
+    @completion.insert('dog')
+
+    assert_equal 2, @completion.count
   end
 end
