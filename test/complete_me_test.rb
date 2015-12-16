@@ -105,6 +105,21 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal ['a', 'aardvark', 'apple'], suggestion
   end
+
+  def test_can_suggest_how_to_order_words
+    skip
+    @completion.insert('pizza')
+    @completion.insert('pizzeria')
+    @completion.insert('pizzicato')
+    words_before_suggest = ['pizza', 'pizzeria', 'pizzicato']
+
+    assert_equal words_before_suggest, @completion.suggest('piz')
+
+    @completion.select('piz', 'pizzeria')
+    words_after_suggest = ['pizzeria', 'pizza', 'pizzicato']
+
+    assert_equal words_after_suggest, @completion.suggest('piz')
+  end
   # create a personal dictionary file with 100 words that we could run on travis
 
   # def test_populate_properly_parses_file_and_inserts_words_into_trie

@@ -60,19 +60,23 @@ class CompleteMe
     count
   end
 
-  def suggest(fragment)
-    return [] if root.children.empty?
-    go_to_next_node(fragment)
+  def select(fragment, word)
+
   end
 
-  def go_to_next_node(fragment, node=root)
+  def suggest(fragment)
+    return [] if root.children.empty?
+    go_to_next_node(fragment) { |node| find_all_matching_words(node) }
+  end
+
+  def go_to_next_node(fragment, node=root, &block)
     if fragment.length == 0
-      words = find_all_matching_words(node)
+      words = yield(node)
       return words.sort
     end
     character = fragment.slice!(0...1)
     unless node.children[character].nil?
-      go_to_next_node(fragment, node.children[character])
+      go_to_next_node(fragment, node.children[character], &block)
     end
   end
 
