@@ -34,4 +34,8 @@ class NodeTest < Minitest::Test
   def test_has_an_initial_word_attr_set_to_false
     refute @node.word?
   end
+
+  def test_has_a_weight_set_to_zero_on_assignment
+    assert_equal 0, @node.weight
+  end
 end
