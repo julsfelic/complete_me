@@ -45,18 +45,16 @@ class CompleteMe
   end
 
   def count
-    find_amount_of_words
+    total_count_of_words
   end
 
-  def find_amount_of_words(node=root, count=0)
+  def total_count_of_words(node=root, count=0)
     return count if node.children.empty?
     node.children.each do |key, node|
       if node.word
-        count += 1
-        count = find_amount_of_words(node, count)
-      end
-      if node.word == false
-        count = find_amount_of_words(node, count)
+        count = total_count_of_words(node, count += 1)
+      else
+        count = total_count_of_words(node, count)
       end
     end
     count
@@ -86,9 +84,9 @@ class CompleteMe
         matching_words << node.value
         matching_words = find_all_matching_words(node, matching_words)
       end
-      if node.word == false
+      # if node.word == false
         matching_words = find_all_matching_words(node, matching_words)
-      end
+      # end
     end
     matching_words
   end
