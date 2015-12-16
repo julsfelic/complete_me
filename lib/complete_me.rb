@@ -56,6 +56,10 @@ class CompleteMe
     end
     count
   end
+
+  def suggest(fragment)
+    return [] if root.children.empty?  
+  end
 end
 
 complete = CompleteMe.new

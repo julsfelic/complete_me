@@ -70,4 +70,8 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal 2, @completion.count
   end
+
+  def test_suggest_returns_an_empty_array_if_there_are_no_words_in_trie
+    assert_equal [], @completion.suggest("piz")
+  end
 end
