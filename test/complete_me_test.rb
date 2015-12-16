@@ -26,7 +26,7 @@ class CompleteMeTest < Minitest::Test
     end
   end
 
-  def test_insert_adds_single_character_to_root_node_that_points_to_a_node
+  def test_insert_adds_single_character_to_roots_children_that_points_to_a_node
     @completion.insert('a')
 
     assert_instance_of Node, @completion.root.children['a']

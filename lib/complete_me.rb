@@ -16,17 +16,13 @@ class CompleteMe
   def check_for_and_insert_word(word, node=root, value="")
     until word.length == 0
       character = word.slice!(0...1)
-      # save only the value if it is a word
       value += character
       next_node = Node.new
       if word.length == 0
-        next_node.value = value
-        next_node.word = true
-        node.children[character] = next_node
-        break
-      end
-      if node.children[character].nil?
-        node.children[character] = next_node
+        next_node = create_word(value)
+        connect_node(node, next_node, character)
+      elsif node.children[character].nil?
+        connect_node(node, next_node, character)
         check_for_and_insert_word(word, next_node, value)
       else
         next_node = node.children[character]
@@ -35,9 +31,13 @@ class CompleteMe
     end
   end
 
-  # def new_node_with_value(word)
-  #   Node.new(word)
-  # end
+  def create_word(value)
+    node = Node.new(value, true)
+  end
+
+  def connect_node(node, next_node, character)
+    node.children[character] = next_node
+  end
 end
 
 complete = CompleteMe.new
