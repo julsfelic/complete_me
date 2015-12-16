@@ -70,7 +70,7 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal 2, @completion.count
   end
-  meta t: true
+
   def test_the_words_cat_and_catty_count_as_two_words
     @completion.insert('cat')
     @completion.insert('catty')
@@ -95,5 +95,12 @@ class CompleteMeTest < Minitest::Test
     suggestion = @completion.suggest("piz")
 
     assert_equal ['pizza', 'pizzeria'], suggestion
+  end
+
+  def test_populate_properly_parses_file_and_inserts_words_into_trie
+    dictionary = File.read("/usr/share/dict/words")
+    @completion.populate(dictionary)
+
+    assert_equal 235886, @completion.count
   end
 end

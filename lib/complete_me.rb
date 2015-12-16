@@ -87,6 +87,13 @@ class CompleteMe
     end
     matching_words
   end
+
+  def populate(dictionary)
+    split_dictionary = dictionary.split("\n")
+    split_dictionary.each do |word|
+      insert(word)
+    end
+  end
 end
 
 # >> ["pizza", "pizzeria"]
