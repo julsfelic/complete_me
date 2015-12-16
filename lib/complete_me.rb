@@ -89,18 +89,4 @@ class CompleteMe
   end
 end
 
-if __FILE__ == $0
-  complete = CompleteMe.new
-
-  complete.insert("dog")
-  complete.insert("dont")
-  complete.insert("pizza")
-  complete.insert("pizzeria")
-  complete.insert("cat")
-  complete.insert("catty")
-
-  complete.count
-  p complete.suggest('piz')
-end
-
 # >> ["pizza", "pizzeria"]
