@@ -50,7 +50,7 @@ class CompleteMe
 
   def total_count_of_words(node=root, count=0)
     return count if node.children.empty?
-    node.children.each do |key, node|
+    node.children.each_value do |node|
       if node.word
         count = total_count_of_words(node, count += 1)
       else
@@ -100,7 +100,7 @@ class CompleteMe
   def return_matching_nodes(node, matching_nodes=[])
     return matching_nodes if node.children.empty?
     matching_nodes << node if node.word? && !matching_nodes.include?(node.value)
-    node.children.each do |key, node|
+    node.children.each_value do |node|
       if node.word
         matching_nodes << node
         matching_nodes = return_matching_nodes(node, matching_nodes)
