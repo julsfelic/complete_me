@@ -183,4 +183,13 @@ class CompleteMeInternalsTest < Minitest::Test
 
     assert_equal ['a', 'aardvark', 'apple'], completion.suggest('a')
   end
+
+  def test_set_node_to_a_word_properly_sets_value_and_word_switch
+    node = Node.new
+
+    completion.set_node_to_a_word(node, "julian")
+
+    assert_equal "julian", node.value
+    assert node.word?
+  end
 end

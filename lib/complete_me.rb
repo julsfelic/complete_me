@@ -65,13 +65,17 @@ class CompleteMe
   def total_count_of_words(node=root, count=0)
     return count if node.children.empty?
     node.children.each_value do |node|
-      if node.word?
-        count = total_count_of_words(node, count += 1)
-      else
-        count = total_count_of_words(node, count)
-      end
+      count = add_to_count(node, count)
     end
     count
+  end
+
+  def add_to_count(node, count)
+    if node.word?
+      count = total_count_of_words(node, count += 1)
+    else
+      count = total_count_of_words(node, count)
+    end
   end
 
   def select(fragment, word)
@@ -112,12 +116,11 @@ class CompleteMe
   end
 
   def go_to_next_node(fragment, node=root, &block)
-    if fragment.length == 0
-      words = yield(node)
-      return words
-    end
-    character = fragment.slice!(0...1)
-    unless node.children[character].nil?
+    if fragment.empty?
+      nodes = yield(node)
+      return nodes
+    else
+      character = fragment.slice!(0...1)
       go_to_next_node(fragment, node.children[character], &block)
     end
   end
@@ -126,13 +129,18 @@ class CompleteMe
     return matching_nodes if node.children.empty?
     matching_nodes << node if node.word? && !matching_nodes.include?(node.value)
     node.children.each_value do |node|
-      if node.word?
-        matching_nodes << node
-        matching_nodes = return_matching_nodes(node, matching_nodes)
-      end
-      matching_nodes = return_matching_nodes(node, matching_nodes)
+      add_to_matching_nodes(node, matching_nodes)
     end
     matching_nodes
+  end
+
+  def add_to_matching_nodes(node, matching_nodes)
+    if node.word?
+      matching_nodes << node
+      matching_nodes = return_matching_nodes(node, matching_nodes)
+    else
+      matching_nodes = return_matching_nodes(node, matching_nodes)
+    end
   end
 
   def populate(dictionary)
