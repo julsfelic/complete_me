@@ -225,8 +225,29 @@ class CompleteMeInternalsTest < Minitest::Test
 
     unsorted_nodes = [node1, node2, node3]
 
-    sorted_words = completion.sort_words(unsorted_nodes, "a")
+    sorted_words = ["aardvark", "apple", "awesome"]
 
-    assert_equal ["aardvark", "apple", "awesome"], sorted_words
+    assert_equal sorted_words, completion.sort_words(unsorted_nodes, "a")
+  end
+
+  def test_sort_words_properly_sorts_words_with_weights_and_without
+    node1 = Node.new("apple", true)
+    node1.increase_weight("a")
+    node1.increase_weight("a")
+    node1.increase_weight("a")
+    node2 = Node.new("aardvark")
+    node2.increase_weight("a")
+    node2.increase_weight("a")
+    node3 = Node.new("awesome")
+    node3.increase_weight("a")
+    node4 = Node.new("alright")
+    node5 = Node.new("always")
+    node6 = Node.new("ant")
+
+    unsorted_nodes = [node1, node2, node3, node4, node5, node6]
+
+    sorted_words = ["apple", "aardvark", "awesome", "alright", "always", "ant"]
+
+    assert_equal sorted_words, completion.sort_words(unsorted_nodes, "a")
   end
 end
