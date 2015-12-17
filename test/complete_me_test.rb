@@ -121,7 +121,7 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal words_after_suggest, completion.suggest('piz')
   end
-  
+
   def test_selection_is_only_counted_toward_subsequent_suggestions_against_the_same_substring
     completion.insert('pizza')
     completion.insert('pizzeria')
@@ -142,12 +142,12 @@ class CompleteMeTest < Minitest::Test
     assert_equal pi_suggestions, completion.suggest("pi")
   end
 
-  # def test_populate_properly_parses_file_and_inserts_words_into_trie
-  #   dictionary = File.read("/usr/share/dict/words")
-  #   completion.populate(dictionary)
-  #
-  #   assert_equal 235886, @completion.count
-  # end
+  def test_populate_properly_parses_file_and_inserts_words_into_trie
+    dictionary = File.read("./test/medium.txt")
+    completion.populate(dictionary)
+
+    assert_equal 1000, @completion.count
+  end
 end
 
 class CompleteMeInternalsTest < Minitest::Test
