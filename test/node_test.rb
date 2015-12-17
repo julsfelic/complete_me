@@ -35,13 +35,13 @@ class NodeTest < Minitest::Test
     refute @node.word?
   end
 
-  def test_has_a_weight_set_to_zero_on_assignment
-    assert_equal 0, @node.weight
+  def test_has_a_weight_set_to_a_hash_on_assignment
+    assert_instance_of Hash, @node.weight
   end
 
   def test_can_increase_its_weight_by_an_interval_of_one
-    @node.increase_weight
+    @node.increase_weight("a")
 
-    assert_equal 1, @node.weight
+    assert_equal 1, @node.weight["a"]
   end
 end

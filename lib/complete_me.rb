@@ -61,16 +61,18 @@ class CompleteMe
   end
 
   def select(fragment, word)
+    substring = fragment.dup
     unweighted_nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
     unweighted_nodes.each do |node|
-      node.increase_weight if node.value ==  word
+      node.increase_weight(substring) if node.value == word
     end
   end
 
-  def sort_words(nodes)
+  def sort_words(nodes, substring)
     weighted_nodes = nodes.select do |node|
-      node.weight > 0
+      node.weight[substring] > 0
     end
+    weighted_nodes.sort_by { |node| node.weight[substring] }
     weighted_words = weighted_nodes.map do |node|
       node.value
     end
@@ -81,9 +83,10 @@ class CompleteMe
   end
 
   def suggest(fragment)
+    substring = fragment.dup
     return [] if root.children.empty?
     nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
-    sort_words(nodes)
+    sort_words(nodes, substring)
   end
 
   def go_to_next_node(fragment, node=root, &block)

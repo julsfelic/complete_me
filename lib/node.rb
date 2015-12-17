@@ -7,10 +7,10 @@ class Node
     @value = value
     @children = {}
     @word = word
-    @weight = 0
+    @weight = Hash.new(0)
   end
 
-  def increase_weight
-    @weight += 1
+  def increase_weight(fragment="")
+    @weight[fragment] += 1
   end
 end
