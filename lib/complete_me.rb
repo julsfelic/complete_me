@@ -83,6 +83,12 @@ class CompleteMe
   end
 
   def sort_words(nodes, substring)
+    weighted_words = grab_weighted_words_for_substring(nodes, substring)
+    sorted_words   = grab_sorted_words_for_substring(nodes, substring)
+    words = weighted_words | sorted_words
+  end
+
+  def grab_weighted_words_for_substring(nodes, substring)
     weighted_nodes = nodes.select do |node|
       node.weight[substring] > 0
     end
@@ -90,10 +96,12 @@ class CompleteMe
     weighted_words = weighted_nodes.map do |node|
       node.value
     end
+  end
+
+  def grab_sorted_words_for_substring(nodes, substring)
     sorted_words = nodes.map do |node|
       node.value
     end.sort
-    words = weighted_words | sorted_words
   end
 
   def suggest(fragment)
@@ -125,19 +133,6 @@ class CompleteMe
       matching_nodes = return_matching_nodes(node, matching_nodes)
     end
     matching_nodes
-  end
-
-  def find_all_matching_words(node, matching_words=[])
-    return matching_words if node.children.empty?
-    matching_words << node.value if node.word? && !matching_words.include?(node.value)
-    node.children.each do |key, node|
-      if node.word?
-        matching_words << node.value
-        matching_words = find_all_matching_words(node, matching_words)
-      end
-      matching_words = find_all_matching_words(node, matching_words)
-    end
-    matching_words
   end
 
   def populate(dictionary)
