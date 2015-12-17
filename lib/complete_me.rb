@@ -138,9 +138,9 @@ class CompleteMe
   def add_to_matching_nodes(node, matching_nodes)
     if node.word?
       matching_nodes << node
-      matching_nodes = return_matching_nodes(node, matching_nodes)
+      return_matching_nodes(node, matching_nodes)
     else
-      matching_nodes = return_matching_nodes(node, matching_nodes)
+      return_matching_nodes(node, matching_nodes)
     end
   end
 
