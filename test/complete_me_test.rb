@@ -121,7 +121,7 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal words_after_suggest, completion.suggest('piz')
   end
-  meta t: true
+  
   def test_selection_is_only_counted_toward_subsequent_suggestions_against_the_same_substring
     completion.insert('pizza')
     completion.insert('pizzeria')

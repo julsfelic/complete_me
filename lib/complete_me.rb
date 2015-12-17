@@ -96,8 +96,9 @@ class CompleteMe
     weighted_nodes = nodes.select do |node|
       node.weight[substring] > 0
     end
-    weighted_nodes.sort_by { |node| node.weight[substring] }
-    weighted_words = weighted_nodes.map do |node|
+    weighted_nodes.sort_by! { |node| node.weight[substring] }
+    weighted_nodes.reverse!
+    weighted_nodes.map! do |node|
       node.value
     end
   end
