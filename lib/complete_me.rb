@@ -14,24 +14,34 @@ class CompleteMe
   end
 
   def insert_word(word, node=root, value="")
-    until word.length == 0
+    until word.empty?
       character = word.slice!(0...1)
       value += character
-      next_node = Node.new
-      if word.length == 0
-        if node.children[character].nil?
-          next_node = create_word(value)
-          connect_node(node, next_node, character)
-        else
-          set_node_to_a_word(node.children[character], value)
-        end
-      elsif node.children[character].nil?
-        connect_node(node, next_node, character)
-        insert_word(word, next_node, value)
+      if word.empty?
+        add_word_to_trie(node, character, value)
       else
-        next_node = node.children[character]
-        insert_word(word, next_node, value)
+        continue_through_trie(node, character, value, word)
       end
+    end
+  end
+
+  def add_word_to_trie(node, character, value)
+    if node.children[character].nil?
+      next_node = create_word(value)
+      connect_node(node, next_node, character)
+    else
+      set_node_to_a_word(node.children[character], value)
+    end
+  end
+
+  def continue_through_trie(node, character, value, word)
+    if node.children[character].nil?
+      next_node = Node.new
+      connect_node(node, next_node, character)
+      insert_word(word, next_node, value)
+    else
+      next_node = node.children[character]
+      insert_word(word, next_node, value)
     end
   end
 

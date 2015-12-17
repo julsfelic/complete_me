@@ -1,9 +1,11 @@
 require 'minitest'
 require 'test_helper'
 require 'node'
+require 'complete_me'
+require 'pry'
 
 class NodeTest < Minitest::Test
-  attr_accessor :node
+  attr_accessor :node, :completion
 
   def setup
     @node = Node.new
