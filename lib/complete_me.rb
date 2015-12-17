@@ -23,8 +23,7 @@ class CompleteMe
           next_node = create_word(value)
           connect_node(node, next_node, character)
         else
-          node.children[character].value = value
-          node.children[character].word  = true
+          set_node_to_a_word(node.children[character])
         end
       elsif node.children[character].nil?
         connect_node(node, next_node, character)
@@ -34,6 +33,11 @@ class CompleteMe
         check_for_and_insert_word(word, next_node, value)
       end
     end
+  end
+
+  def set_node_to_a_word(node)
+    node.set_value(value)
+    node.set_to_word
   end
 
   def create_word(value)
@@ -51,7 +55,7 @@ class CompleteMe
   def total_count_of_words(node=root, count=0)
     return count if node.children.empty?
     node.children.each_value do |node|
-      if node.word
+      if node.word?
         count = total_count_of_words(node, count += 1)
       else
         count = total_count_of_words(node, count)
@@ -104,13 +108,11 @@ class CompleteMe
     return matching_nodes if node.children.empty?
     matching_nodes << node if node.word? && !matching_nodes.include?(node.value)
     node.children.each_value do |node|
-      if node.word
+      if node.word?
         matching_nodes << node
         matching_nodes = return_matching_nodes(node, matching_nodes)
       end
-      # if node.word == false
-        matching_nodes = return_matching_nodes(node, matching_nodes)
-      # end
+      matching_nodes = return_matching_nodes(node, matching_nodes)
     end
     matching_nodes
   end
@@ -119,13 +121,11 @@ class CompleteMe
     return matching_words if node.children.empty?
     matching_words << node.value if node.word? && !matching_words.include?(node.value)
     node.children.each do |key, node|
-      if node.word
+      if node.word?
         matching_words << node.value
         matching_words = find_all_matching_words(node, matching_words)
       end
-      # if node.word == false
-        matching_words = find_all_matching_words(node, matching_words)
-      # end
+      matching_words = find_all_matching_words(node, matching_words)
     end
     matching_words
   end

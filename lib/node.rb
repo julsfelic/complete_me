@@ -1,5 +1,4 @@
 class Node
-  attr_accessor :value, :word
   attr_reader :children, :value, :word, :weight
   alias_method :word?, :word
 
@@ -12,5 +11,13 @@ class Node
 
   def increase_weight(fragment="")
     @weight[fragment] += 1
+  end
+
+  def set_value(value)
+    @value = value
+  end
+
+  def set_to_word
+    @word = true
   end
 end
