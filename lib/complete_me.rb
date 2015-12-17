@@ -1,5 +1,5 @@
 require_relative 'node'
-require 'pry'
+# require 'pry'
 
 class CompleteMe
   attr_reader :root
@@ -34,6 +34,15 @@ class CompleteMe
     end
   end
 
+  def connect_node(node, next_node, character)
+    node.children[character] = next_node
+  end
+
+  def set_node_to_a_word(node, value)
+    node.set_value(value)
+    node.set_to_word
+  end
+
   def continue_through_trie(node, character, value, word)
     if node.children[character].nil?
       next_node = Node.new
@@ -45,17 +54,8 @@ class CompleteMe
     end
   end
 
-  def set_node_to_a_word(node, value)
-    node.set_value(value)
-    node.set_to_word
-  end
-
   def create_word(value)
     Node.new(value, true)
-  end
-
-  def connect_node(node, next_node, character)
-    node.children[character] = next_node
   end
 
   def count
@@ -83,6 +83,16 @@ class CompleteMe
     unweighted_nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
     unweighted_nodes.each do |node|
       node.increase_weight(substring) if node.value == word
+    end
+  end
+
+  def go_to_next_node(fragment, node=root, &block)
+    if fragment.empty?
+      nodes = yield(node)
+      return nodes
+    else
+      character = fragment.slice!(0...1)
+      go_to_next_node(fragment, node.children[character], &block)
     end
   end
 
@@ -114,16 +124,6 @@ class CompleteMe
     return [] if root.children.empty?
     nodes = go_to_next_node(fragment) { |node| return_matching_nodes(node) }
     sort_words(nodes, substring)
-  end
-
-  def go_to_next_node(fragment, node=root, &block)
-    if fragment.empty?
-      nodes = yield(node)
-      return nodes
-    else
-      character = fragment.slice!(0...1)
-      go_to_next_node(fragment, node.children[character], &block)
-    end
   end
 
   def return_matching_nodes(node, matching_nodes=[])
