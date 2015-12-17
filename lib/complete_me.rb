@@ -51,7 +51,7 @@ class CompleteMe
   end
 
   def create_word(value)
-    node = Node.new(value, true)
+    Node.new(value, true)
   end
 
   def connect_node(node, next_node, character)
@@ -64,17 +64,17 @@ class CompleteMe
 
   def total_count_of_words(node=root, count=0)
     return count if node.children.empty?
-    node.children.each_value do |node|
-      count = add_to_count(node, count)
+    node.children.each_value do |inner_node|
+      count = add_to_count(inner_node, count)
     end
     count
   end
 
   def add_to_count(node, count)
     if node.word?
-      count = total_count_of_words(node, count += 1)
+      total_count_of_words(node, count += 1)
     else
-      count = total_count_of_words(node, count)
+      total_count_of_words(node, count)
     end
   end
 
@@ -88,8 +88,8 @@ class CompleteMe
 
   def sort_words(nodes, substring)
     weighted_words = grab_weighted_words_for_substring(nodes, substring)
-    sorted_words   = grab_sorted_words_for_substring(nodes, substring)
-    words = weighted_words | sorted_words
+    sorted_words   = grab_sorted_words_for_substring(nodes)
+    weighted_words | sorted_words
   end
 
   def grab_weighted_words_for_substring(nodes, substring)
@@ -103,8 +103,8 @@ class CompleteMe
     end
   end
 
-  def grab_sorted_words_for_substring(nodes, substring)
-    sorted_words = nodes.map do |node|
+  def grab_sorted_words_for_substring(nodes)
+    nodes.map do |node|
       node.value
     end.sort
   end
@@ -129,8 +129,8 @@ class CompleteMe
   def return_matching_nodes(node, matching_nodes=[])
     return matching_nodes if node.children.empty?
     matching_nodes << node if node.word? && !matching_nodes.include?(node.value)
-    node.children.each_value do |node|
-      add_to_matching_nodes(node, matching_nodes)
+    node.children.each_value do |inner_node|
+      add_to_matching_nodes(inner_node, matching_nodes)
     end
     matching_nodes
   end
