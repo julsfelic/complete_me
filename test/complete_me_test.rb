@@ -192,4 +192,41 @@ class CompleteMeInternalsTest < Minitest::Test
     assert_equal "julian", node.value
     assert node.word?
   end
+
+  def test_create_word_returns_node_with_word_switch_to_true
+    node = completion.create_word("julian")
+
+    assert_instance_of Node, node
+    assert_equal "julian", node.value
+    assert node.word?
+  end
+
+  def test_connect_node_properly_connects_two_nodes
+    node1 = Node.new
+    node2 = Node.new
+
+    completion.connect_node(node1, node2, "j")
+
+    assert_equal node2.object_id, node1.children["j"].object_id
+  end
+
+  def test_total_count_of_words_returns_proper_count
+    completion.insert('a')
+    completion.insert('aardvark')
+    completion.insert('apple')
+
+    assert_equal 3, completion.total_count_of_words
+  end
+
+  def test_sort_words_properly_sorts_words
+    node1 = Node.new("apple", true)
+    node2 = Node.new("aardvark", true)
+    node3 = Node.new("awesome", true)
+
+    unsorted_nodes = [node1, node2, node3]
+
+    sorted_words = completion.sort_words(unsorted_nodes, "a")
+
+    assert_equal ["aardvark", "apple", "awesome"], sorted_words
+  end
 end
