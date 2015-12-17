@@ -10,10 +10,10 @@ class CompleteMe
 
   def insert(word)
     raise ArgumentError, 'Argument is not a word' unless word.is_a?(String)
-    check_for_and_insert_word(word)
+    insert_word(word)
   end
 
-  def check_for_and_insert_word(word, node=root, value="")
+  def insert_word(word, node=root, value="")
     until word.length == 0
       character = word.slice!(0...1)
       value += character
@@ -23,19 +23,19 @@ class CompleteMe
           next_node = create_word(value)
           connect_node(node, next_node, character)
         else
-          set_node_to_a_word(node.children[character])
+          set_node_to_a_word(node.children[character], value)
         end
       elsif node.children[character].nil?
         connect_node(node, next_node, character)
-        check_for_and_insert_word(word, next_node, value)
+        insert_word(word, next_node, value)
       else
         next_node = node.children[character]
-        check_for_and_insert_word(word, next_node, value)
+        insert_word(word, next_node, value)
       end
     end
   end
 
-  def set_node_to_a_word(node)
+  def set_node_to_a_word(node, value)
     node.set_value(value)
     node.set_to_word
   end

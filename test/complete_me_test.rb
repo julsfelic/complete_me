@@ -141,7 +141,6 @@ class CompleteMeTest < Minitest::Test
     pi_suggestions = ['pizza', 'pizzicato', 'pizzeria']
     assert_equal pi_suggestions, completion.suggest("pi")
   end
-  # create a personal dictionary file with 100 words that we could run on travis
 
   # def test_populate_properly_parses_file_and_inserts_words_into_trie
   #   dictionary = File.read("/usr/share/dict/words")
@@ -149,4 +148,39 @@ class CompleteMeTest < Minitest::Test
   #
   #   assert_equal 235886, @completion.count
   # end
+end
+
+class CompleteMeInternalsTest < Minitest::Test
+  attr_accessor :completion
+
+  def setup
+    @completion = CompleteMe.new
+  end
+
+  def test_insert_word_properly_sets_word_when_node_doesnt_exist
+    completion.insert_word('a')
+    word_node = completion.root.children['a']
+
+    assert word_node.word?
+  end
+
+  def test_insert_word_properly_sets_word_when_node_doesnt_exist
+    completion.insert_word('apple')
+    word_node = completion.root.children['a']
+
+    refute word_node.word?
+
+    completion.insert_word('a')
+    word_node = completion.root.children['a']
+
+    assert word_node.word?
+  end
+
+  def test_insert_word_can_add_multiple_words_that_share_similar_characters
+    completion.insert_word('a')
+    completion.insert_word('apple')
+    completion.insert_word('aardvark')
+
+    assert_equal ['a', 'aardvark', 'apple'], completion.suggest('a')
+  end
 end
